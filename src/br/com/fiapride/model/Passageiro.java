@@ -6,7 +6,7 @@ package br.com.fiapride.model;
  * O saldo NÃO tem setter de propósito: ele só muda por operações
  * de negócio (adicionarSaldo / pagar), que têm regras.
  */
-public class Passageiro {
+public class Passageiro implements Avaliavel {
     private String nome;
     private String email;
     private double saldo;
@@ -84,5 +84,24 @@ public class Passageiro {
 
     public String exibirResumo() {
         return String.format("%s (%s) | Saldo: R$ %.2f", nome, tipoConta, saldo);
+    }
+
+    // ---------- Avaliavel ----------
+    private int somaNotas;
+    private int totalAvaliacoes;
+
+    @Override
+    public void avaliar(int nota) {
+        if (nota < NOTA_MINIMA || nota > NOTA_MAXIMA) {
+            System.out.println("Erro: nota deve estar entre " + NOTA_MINIMA + " e " + NOTA_MAXIMA + ".");
+            return;
+        }
+        somaNotas += nota;
+        totalAvaliacoes++;
+    }
+
+    @Override
+    public double getMediaAvaliacoes() {
+        return totalAvaliacoes == 0 ? 0.0 : (double) somaNotas / totalAvaliacoes;
     }
 }

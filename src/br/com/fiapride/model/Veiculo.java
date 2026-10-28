@@ -11,7 +11,7 @@ package br.com.fiapride.model;
  *  - É ABSTRATA: não existe "um veículo genérico" na frota. Ninguém pode
  *    fazer new Veiculo(); só Carro, Moto etc. podem ser instanciados.
  */
-public abstract class Veiculo {
+public abstract class Veiculo implements Avaliavel {
     private String placa;
     private String modelo;
     private int ano;
@@ -90,5 +90,24 @@ public abstract class Veiculo {
 
     public String exibirDetalhes() {
         return String.format("[%s] %s %d - Placa %s", getCategoria(), modelo, ano, placa);
+    }
+
+    // ---------- Avaliavel ----------
+    private int somaNotas;
+    private int totalAvaliacoes;
+
+    @Override
+    public void avaliar(int nota) {
+        if (nota < NOTA_MINIMA || nota > NOTA_MAXIMA) {
+            System.out.println("Erro: nota deve estar entre " + NOTA_MINIMA + " e " + NOTA_MAXIMA + ".");
+            return;
+        }
+        somaNotas += nota;
+        totalAvaliacoes++;
+    }
+
+    @Override
+    public double getMediaAvaliacoes() {
+        return totalAvaliacoes == 0 ? 0.0 : (double) somaNotas / totalAvaliacoes;
     }
 }
