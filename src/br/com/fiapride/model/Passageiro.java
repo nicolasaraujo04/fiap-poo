@@ -12,6 +12,25 @@ public class Passageiro {
     private double saldo;
     private String tipoConta; // "COMUM" ou "PREMIUM"
 
+    // ---------- Construtores ----------
+    /** Construtor padrão: delega para o completo com valores iniciais via this(). */
+    public Passageiro() {
+        this("Passageiro Convidado", "convidado@fiapride.com");
+    }
+
+    /** Construtor com dados mínimos: conta COMUM e saldo zero. */
+    public Passageiro(String nome, String email) {
+        this(nome, email, "COMUM");
+    }
+
+    /** Construtor completo. Usa os setters para reaproveitar as validações. */
+    public Passageiro(String nome, String email, String tipoConta) {
+        this.setNome(nome);
+        this.setEmail(email);
+        this.setTipoConta(tipoConta);
+        this.saldo = 0.0;
+    }
+
     // ---------- Getters ----------
     public String getNome() { return nome; }
     public String getEmail() { return email; }
