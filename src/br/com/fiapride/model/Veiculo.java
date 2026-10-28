@@ -74,6 +74,19 @@ public class Veiculo {
         return true;
     }
 
+    /**
+     * Contrato: todo veículo sabe dizer quantos km roda com o tanque cheio.
+     * A versão da mãe é genérica; cada filha sobrescreve com sua própria regra.
+     */
+    public double calcularAutonomia() {
+        return 0.0;
+    }
+
+    /** Preço por km cobrado na viagem. Padrão do app; filhas podem mudar. */
+    public double getTarifaPorKm() {
+        return 2.5;
+    }
+
     public String exibirDetalhes() {
         return String.format("%s %d - Placa %s", modelo, ano, placa);
     }

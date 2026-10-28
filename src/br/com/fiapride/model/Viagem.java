@@ -7,7 +7,6 @@ package br.com.fiapride.model;
  */
 public class Viagem {
     private static final double TAXA_BASE = 5.0;
-    private static final double PRECO_POR_KM = 2.5;
 
     private final Passageiro solicitante;
     private final Veiculo veiculo;
@@ -33,7 +32,7 @@ public class Viagem {
     }
 
     public double calcularValor() {
-        double valor = TAXA_BASE + distanciaKm * PRECO_POR_KM;
+        double valor = TAXA_BASE + distanciaKm * veiculo.getTarifaPorKm(); // polimórfico
         if ("PREMIUM".equals(solicitante.getTipoConta())) {
             valor *= 0.9;
         }

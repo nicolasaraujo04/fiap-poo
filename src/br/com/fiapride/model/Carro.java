@@ -19,6 +19,21 @@ public class Carro extends Veiculo {
         this.consumoKmPorLitro = consumoKmPorLitro;
     }
 
+    @Override
+    public double calcularAutonomia() {
+        return capacidadeTanqueLitros * consumoKmPorLitro; // usa o atributo protected da mãe
+    }
+
+    @Override
+    public double getTarifaPorKm() {
+        return 2.5;
+    }
+
+    @Override
+    public String exibirDetalhes() {
+        return "[Carro] " + super.exibirDetalhes() + " | " + numeroPortas + " portas";
+    }
+
     public int getNumeroPortas() { return numeroPortas; }
     public double getConsumoKmPorLitro() { return consumoKmPorLitro; }
 }

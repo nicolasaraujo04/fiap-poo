@@ -3,33 +3,34 @@ package br.com.fiapride;
 import br.com.fiapride.model.Carro;
 import br.com.fiapride.model.Moto;
 import br.com.fiapride.model.Passageiro;
+import br.com.fiapride.model.Veiculo;
 import br.com.fiapride.model.Viagem;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Teste de herança ===");
+        System.out.println("=== Teste polimórfico ===");
 
-        Carro onix = new Carro("ABC1D23", "Chevrolet Onix", 2022, 44, 4, 13.5);
-        Moto cg = new Moto("MOT0A12", "Honda CG 160", 2023, 16, 160, true, 40);
+        List<Veiculo> frota = List.of(
+                new Carro("ABC1D23", "Chevrolet Onix", 2022, 44, 4, 13.5),
+                new Moto("MOT0A12", "Honda CG 160", 2023, 16, 160, true, 40),
+                new Carro("XYZ9876", "Fiat Mobi", 2021, 47, 4, 14.2)
+        );
 
-        // métodos herdados da mãe Veiculo
-        System.out.println(onix.exibirDetalhes() + " | " + onix.getNumeroPortas() + " portas");
-        System.out.println(cg.exibirDetalhes() + " | " + cg.getCilindradas() + "cc"
-                + (cg.isPossuiBau() ? " com baú" : ""));
-        cg.atualizarPlaca("MOT1B23", "DET-778899");
-
-        // a validação de placa da mãe vale para as filhas
-        try {
-            new Moto("XX", "Yamaha Factor", 2021, 15, 150, false, 38);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Bloqueado: " + e.getMessage());
+        // a variável é do tipo genérico Veiculo, mas cada objeto executa SUA versão
+        for (Veiculo veiculo : frota) {
+            System.out.printf("%s | Autonomia: %.0f km | Tarifa: R$ %.2f/km%n",
+                    veiculo.exibirDetalhes(), veiculo.calcularAutonomia(), veiculo.getTarifaPorKm());
         }
 
-        // Viagem aceita Carro e Moto porque ambos SÃO Veiculo
+        // a mesma viagem custa diferente dependendo do veículo
         Passageiro ana = new Passageiro("Ana Silva", "ana@email.com");
         ana.adicionarSaldo(100);
-        Viagem v = new Viagem(ana, cg, "Consolação", "Vila Madalena", 4);
-        v.finalizar();
-        System.out.println(v.exibirResumo());
+        System.out.println("\nCotação de 10 km para " + ana.getNome() + ":");
+        for (Veiculo veiculo : frota) {
+            Viagem cotacao = new Viagem(ana, veiculo, "FIAP Paulista", "Ibirapuera", 10);
+            System.out.printf("  %-16s R$ %.2f%n", veiculo.getModelo(), cotacao.calcularValor());
+        }
     }
 }

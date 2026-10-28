@@ -20,6 +20,22 @@ public class Moto extends Veiculo {
         this.consumoKmPorLitro = consumoKmPorLitro;
     }
 
+    @Override
+    public double calcularAutonomia() {
+        return capacidadeTanqueLitros * consumoKmPorLitro;
+    }
+
+    @Override
+    public double getTarifaPorKm() {
+        return 1.6; // moto é mais barata por km
+    }
+
+    @Override
+    public String exibirDetalhes() {
+        return "[Moto] " + super.exibirDetalhes() + " | " + cilindradas + "cc"
+                + (possuiBau ? " com baú" : "");
+    }
+
     public int getCilindradas() { return cilindradas; }
     public boolean isPossuiBau() { return possuiBau; }
     public double getConsumoKmPorLitro() { return consumoKmPorLitro; }
