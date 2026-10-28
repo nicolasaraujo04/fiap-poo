@@ -10,13 +10,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Teste polimórfico ===");
+        System.out.println("=== Teste com classe abstrata ===");
 
         List<Veiculo> frota = List.of(
                 new Carro("ABC1D23", "Chevrolet Onix", 2022, 44, 4, 13.5),
                 new Moto("MOT0A12", "Honda CG 160", 2023, 16, 160, true, 40),
                 new Carro("XYZ9876", "Fiat Mobi", 2021, 47, 4, 14.2)
         );
+
+        // Veiculo generico = new Veiculo(...);  -> não compila: Veiculo é abstract
 
         // a variável é do tipo genérico Veiculo, mas cada objeto executa SUA versão
         for (Veiculo veiculo : frota) {

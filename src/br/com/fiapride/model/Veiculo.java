@@ -8,8 +8,10 @@ package br.com.fiapride.model;
  *  - setPlaca() é PRIVADO: trocar placa no mundo real é um processo no Detran,
  *    não um simples "alterar campo". Quem quiser trocar usa atualizarPlaca(),
  *    que exige um protocolo e registra a operação.
+ *  - É ABSTRATA: não existe "um veículo genérico" na frota. Ninguém pode
+ *    fazer new Veiculo(); só Carro, Moto etc. podem ser instanciados.
  */
-public class Veiculo {
+public abstract class Veiculo {
     private String placa;
     private String modelo;
     private int ano;
@@ -75,19 +77,18 @@ public class Veiculo {
     }
 
     /**
-     * Contrato: todo veículo sabe dizer quantos km roda com o tanque cheio.
-     * A versão da mãe é genérica; cada filha sobrescreve com sua própria regra.
+     * Contrato: todo veículo sabe dizer quantos km roda com a energia cheia.
+     * Abstrato: não há resposta "genérica", cada filha é OBRIGADA a implementar.
      */
-    public double calcularAutonomia() {
-        return 0.0;
-    }
+    public abstract double calcularAutonomia();
 
-    /** Preço por km cobrado na viagem. Padrão do app; filhas podem mudar. */
-    public double getTarifaPorKm() {
-        return 2.5;
-    }
+    /** Preço por km cobrado na viagem: cada tipo de veículo define o seu. */
+    public abstract double getTarifaPorKm();
+
+    /** Categoria exibida no app (ex.: "Carro", "Moto"). */
+    public abstract String getCategoria();
 
     public String exibirDetalhes() {
-        return String.format("%s %d - Placa %s", modelo, ano, placa);
+        return String.format("[%s] %s %d - Placa %s", getCategoria(), modelo, ano, placa);
     }
 }

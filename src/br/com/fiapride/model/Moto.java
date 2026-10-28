@@ -21,6 +21,11 @@ public class Moto extends Veiculo {
     }
 
     @Override
+    public String getCategoria() {
+        return "Moto";
+    }
+
+    @Override
     public double calcularAutonomia() {
         return capacidadeTanqueLitros * consumoKmPorLitro;
     }
@@ -32,7 +37,7 @@ public class Moto extends Veiculo {
 
     @Override
     public String exibirDetalhes() {
-        return "[Moto] " + super.exibirDetalhes() + " | " + cilindradas + "cc"
+        return super.exibirDetalhes() + " | " + cilindradas + "cc"
                 + (possuiBau ? " com baú" : "");
     }
 

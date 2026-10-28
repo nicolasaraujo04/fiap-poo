@@ -20,6 +20,11 @@ public class Carro extends Veiculo {
     }
 
     @Override
+    public String getCategoria() {
+        return "Carro";
+    }
+
+    @Override
     public double calcularAutonomia() {
         return capacidadeTanqueLitros * consumoKmPorLitro; // usa o atributo protected da mãe
     }
@@ -31,7 +36,7 @@ public class Carro extends Veiculo {
 
     @Override
     public String exibirDetalhes() {
-        return "[Carro] " + super.exibirDetalhes() + " | " + numeroPortas + " portas";
+        return super.exibirDetalhes() + " | " + numeroPortas + " portas";
     }
 
     public int getNumeroPortas() { return numeroPortas; }
