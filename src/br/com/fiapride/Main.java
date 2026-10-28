@@ -7,7 +7,6 @@ public class Main {
     static final double TAXA_BASE = 5.0;
     static final double PRECO_POR_KM = 2.5;
 
-    /** Calcula o valor estimado de uma corrida. Retorna -1 para distância inválida. */
     static double calcularValorCorrida(double distanciaKm) {
         if (distanciaKm <= 0) {
             System.out.println("Erro: distância deve ser maior que zero.");
@@ -16,41 +15,35 @@ public class Main {
         return TAXA_BASE + distanciaKm * PRECO_POR_KM;
     }
 
-    /** Aplica desconto de 10% para contas PREMIUM. */
     static double aplicarDesconto(double valor, String tipoConta) {
-        if ("PREMIUM".equals(tipoConta)) {
-            return valor * 0.9;
-        }
-        return valor;
+        return "PREMIUM".equals(tipoConta) ? valor * 0.9 : valor;
     }
 
     public static void main(String[] args) {
         Passageiro ana = new Passageiro();
-        ana.nome = "Ana Silva";
-        ana.email = "ana@email.com";
-        ana.saldo = 50.0;
-        ana.tipoConta = "COMUM";
+        ana.setNome("Ana Silva");
+        ana.setEmail("ana@email.com");
+        ana.setTipoConta("COMUM");
+        ana.adicionarSaldo(50);
 
-        Passageiro bruno = new Passageiro();
-        bruno.nome = "Bruno Costa";
-        bruno.email = "bruno@email.com";
-        bruno.saldo = 120.0;
-        bruno.tipoConta = "PREMIUM";
-
-        System.out.println("=== Teste de métodos ===");
-        ana.adicionarSaldo(30);
-        ana.adicionarSaldo(-10); // deve ser recusado
+        System.out.println("=== Teste de encapsulamento ===");
         System.out.println(ana.exibirResumo());
 
-        double corrida = calcularValorCorrida(12);
-        double corridaBruno = aplicarDesconto(corrida, bruno.tipoConta);
-        System.out.printf("Corrida de 12 km: R$ %.2f (Bruno paga R$ %.2f)%n", corrida, corridaBruno);
+        // ana.saldo = 1_000_000;  -> não compila mais: saldo é private
 
-        bruno.pagar(corridaBruno);
-        ana.pagar(500); // saldo insuficiente
-        calcularValorCorrida(0); // distância inválida
+        try {
+            ana.setEmail("email-invalido");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Bloqueado: " + e.getMessage());
+        }
+        try {
+            ana.setTipoConta("VIP");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Bloqueado: " + e.getMessage());
+        }
 
-        System.out.println(ana.exibirResumo());
-        System.out.println(bruno.exibirResumo());
+        double corrida = aplicarDesconto(calcularValorCorrida(8), ana.getTipoConta());
+        ana.pagar(corrida);
+        System.out.printf("Saldo após corrida (getSaldo): R$ %.2f%n", ana.getSaldo());
     }
 }
