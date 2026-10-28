@@ -6,7 +6,7 @@
 - **RM:** [Seu RM]
 - **Turma:** [Sua Turma]
 - **Curso:** [Seu Curso]
-- **GitHub:** [@seu-usuario]
+- **GitHub:** [@nicolasaraujo04](https://github.com/nicolasaraujo04)
 
 ---
 
@@ -18,21 +18,27 @@ Além do FiapRide, o repositório traz um **projeto pessoal**: um sistema de emp
 
 ### Como executar
 
+**No Eclipse:** abra o projeto (File > Import > Existing Projects into Workspace), clique com o botão direito em `Main.java` ou `BibliotecaApp.java` e escolha *Run As > Java Application*.
+
+**Pelo terminal:**
+
 ```bash
 # compilar tudo
 javac -d out $(find src -name "*.java")
 
 # FiapRide
-java -cp out br.com.fiapride.Main
+java --module-path out -m FiapRideNicolas/br.com.fiapride.Main
 
 # Projeto pessoal (Biblioteca)
-java -cp out br.com.biblioteca.BibliotecaApp
+java --module-path out -m FiapRideNicolas/br.com.biblioteca.BibliotecaApp
 ```
 
 ### Estrutura
 
 ```
-src/br/com/
+src/
+├── module-info.java             (módulo FiapRideNicolas)
+br/com/
 ├── fiapride/
 │   ├── Main.java
 │   └── model/
