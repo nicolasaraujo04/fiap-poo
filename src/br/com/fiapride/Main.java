@@ -2,34 +2,30 @@ package br.com.fiapride;
 
 import br.com.fiapride.model.Passageiro;
 import br.com.fiapride.model.Veiculo;
+import br.com.fiapride.model.Viagem;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Teste de construtores ===");
+        System.out.println("=== Teste de associação ===");
 
-        Passageiro convidado = new Passageiro();                       // construtor padrão
-        Passageiro ana = new Passageiro("Ana Silva", "ana@email.com"); // 2 parâmetros
-        Passageiro bruno = new Passageiro("Bruno Costa", "bruno@email.com", "PREMIUM");
+        Passageiro ana = new Passageiro("Ana Silva", "ana@email.com");
         ana.adicionarSaldo(50);
-
-        System.out.println(convidado.exibirResumo());
-        System.out.println(ana.exibirResumo());
-        System.out.println(bruno.exibirResumo());
+        Passageiro bruno = new Passageiro("Bruno Costa", "bruno@email.com", "PREMIUM");
+        bruno.adicionarSaldo(10);
 
         Veiculo onix = new Veiculo("ABC1D23", "Chevrolet Onix", 2022);
-        Veiculo hb20 = new Veiculo("XYZ-9876", "Hyundai HB20"); // ano corrente via this()
-        System.out.println(onix.exibirDetalhes());
-        System.out.println(hb20.exibirDetalhes());
 
-        // onix.setModelo("Ferrari");  -> não existe
-        // onix.setPlaca("AAA0000");   -> privado, não compila
-        onix.atualizarPlaca("BRA2E19", "123");        // recusado
-        onix.atualizarPlaca("BRA2E19", "DET-004521"); // aceito
+        Viagem v1 = new Viagem(ana, onix, "FIAP Paulista", "Av. Faria Lima", 6.4);
+        System.out.println(v1.exibirResumo());
+        v1.finalizar();
+        System.out.println(v1.exibirResumo());
+        System.out.printf("Saldo da Ana após a viagem: R$ %.2f%n", ana.getSaldo());
 
-        try {
-            new Veiculo("123", "Fusca", 1980);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Bloqueado: " + e.getMessage());
-        }
+        // A viagem acessa o objeto real: a mudança aparece no próprio passageiro
+        System.out.println("Mesmo objeto? " + (v1.getSolicitante() == ana));
+
+        Viagem v2 = new Viagem(bruno, onix, "Pinheiros", "Aeroporto de Congonhas", 15);
+        v2.finalizar(); // Bruno não tem saldo suficiente
+        System.out.println(v2.exibirResumo());
     }
 }
