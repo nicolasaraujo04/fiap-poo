@@ -14,13 +14,22 @@ public class Veiculo {
     private String modelo;
     private int ano;
 
+    /**
+     * protected: as filhas (Carro, Moto) precisam ler a capacidade do tanque
+     * para seus próprios cálculos, mas classes de fora do pacote/hierarquia não.
+     */
+    protected double capacidadeTanqueLitros;
+
     /** Construtor sem ano: assume o ano corrente e delega com this(). */
-    public Veiculo(String placa, String modelo) {
-        this(placa, modelo, java.time.Year.now().getValue());
+    public Veiculo(String placa, String modelo, double capacidadeTanqueLitros) {
+        this(placa, modelo, java.time.Year.now().getValue(), capacidadeTanqueLitros);
     }
 
     /** Construtor completo. */
-    public Veiculo(String placa, String modelo, int ano) {
+    public Veiculo(String placa, String modelo, int ano, double capacidadeTanqueLitros) {
+        if (capacidadeTanqueLitros <= 0) {
+            throw new IllegalArgumentException("Capacidade do tanque deve ser positiva.");
+        }
         if (modelo == null || modelo.isBlank()) {
             throw new IllegalArgumentException("Modelo é obrigatório.");
         }
@@ -30,6 +39,7 @@ public class Veiculo {
         this.setPlaca(placa);
         this.modelo = modelo;
         this.ano = ano;
+        this.capacidadeTanqueLitros = capacidadeTanqueLitros;
     }
 
     public String getPlaca() { return placa; }
